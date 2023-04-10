@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      img {
+        width: 500px;
+        height: 665px;
+      }
+      .left {
+        position: absolute;
+        left: 560px;
+        top: 35%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+      .right {
+        position: absolute;
+        right: 560px;
+        top: 35%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img class="box" src="" alt="" />
+      <div class="left">
+        <svg
+          t="1679570168691"
+          class="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="3011"
+          width="64"
+          height="64"
+        >
+          <path
+            d="M409.152 512l403.712 403.712a63.424 63.424 0 1 1-89.728 89.728L274.56 556.8a63.424 63.424 0 0 1 0-89.6L723.2 18.56a63.424 63.424 0 1 1 89.6 89.728L409.216 512z"
+            fill="#666666"
+            p-id="3012"
+          ></path>
+        </svg>
+      </div>
+      <div class="right">
+        <svg
+          t="1679572914240"
+          class="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="3211"
+          width="64"
+          height="64"
+        >
+          <path
+            d="M648.41999999 512l-378.48-378.48a59.46 59.46 0 1 1 84.12-84.12L774.59999999 470a59.46 59.46 0 0 1 0 84L353.99999999 974.6a59.46 59.46 0 1 1-84-84.11999999L648.35999999 512z"
+            fill="#666666"
+            p-id="3212"
+          ></path>
+        </svg>
+      </div>
+    </div>
+    <script>
+      // 1.实现一个轮播图功能 点击图片左右俩边的按钮切换图片，并且不点按钮可以自动2秒切换一张图
+
+      const imgs = [
+        "1.jpg",
+        "2.jpg",
+        "3.jpg",
+        "7.jpg",
+        "8.jpg",
+        "9.jpg",
+        "11.jpg",
+        "12.jpg",
+        "15.jpg",
+        "16.jpg",
+        "17.jpg",
+        "18.jpg",
+        "21.jpg",
+        "22.jpg",
+        "23.jpg",
+        "24.jpg",
+        "26.jpg",
+        "27.jpg",
+        "28.jpg",
+      ];
+      (function () {
+        const imgsObj = document.querySelector("img");
+        let index = 0;
+        imgsObj.src = "./images/" + imgs[index];
+        const leftDiv = document.querySelector(".left");
+        leftDiv.addEventListener("click", function () {
+          index--;
+          if (index < 0) {
+            index = imgs.length - 1;
+          }
+          imgsObj.src = "./images/" + imgs[index];
+        });
+        const rightDiv = document.querySelector(".right");
+        rightDiv.addEventListener("click", function () {
+          index++;
+          if (index >= imgs.length) {
+            index = 0;
+          }
+          imgsObj.src = "./images/" + imgs[index];
+        });
+        /* //设置定时器：
+         //法一：
+         function autoImgs() {
+           setInterval(function () {
+             index++;
+             if (index >= imgs.length) {
+               index = 0;
+             }
+             imgsObj.src = "./images/" + imgs[index];
+           }, 2000);
+         }
+         autoImgs(); */
+        //法二：
+        let timerId = setInterval(function () {
+          rightDiv.click();
+        }, 1000);
+        //停止定时器：
+        const divObj = document.querySelector(".box");
+        divObj.addEventListener("mouseenter", function () {
+          clearInterval(timerId);
+        });
+        //开启定时器：
+
+        divObj.addEventListener("mouseleave", function () {
+          //停止定时器：
+          clearInterval(timerId);
+          //开启定时器：
+          timerId = setInterval(function () {
+            rightDiv.click();
+          }, 1000);
+        });
+      })();
+    </script>
+  </body>
+</html>
